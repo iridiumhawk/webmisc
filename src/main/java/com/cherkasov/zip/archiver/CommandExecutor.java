@@ -2,12 +2,10 @@ package com.cherkasov.zip.archiver;
 
 
 import com.cherkasov.zip.archiver.command.*;
-
 import java.util.HashMap;
-import java.util.Map;
 
 public class CommandExecutor {
-    private static final Map<Operation, Command> allKnownCommandsMap = new HashMap<>();
+    private static final HashMap<Operation, Command> allKnownCommandsMap = new HashMap<>();
 
     static {
         allKnownCommandsMap.put(Operation.CREATE, new ZipCreateCommand());

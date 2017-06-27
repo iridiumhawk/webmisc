@@ -1,7 +1,7 @@
 package com.cherkasov.zip.archiver;
 
 
-import com.cherkasov.zip.archiver.exception.WrongZipFileException;
+import com.cherkasov.zip.archiver.exception.*;
 
 import java.io.IOException;
 
