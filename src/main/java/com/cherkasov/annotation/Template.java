@@ -13,4 +13,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Template {
   String value() default "";
+  String[] dates() default {"0"};
 }

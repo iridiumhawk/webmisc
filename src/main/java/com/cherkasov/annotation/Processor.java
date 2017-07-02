@@ -1,5 +1,6 @@
 package com.cherkasov.annotation;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 /**
@@ -7,71 +8,64 @@ import java.lang.reflect.Method;
  */
 public class Processor {
 
-  Object object;
-  Method method;
-  int priority;
+    private Object obj;
+    private Class<? extends Annotation> annoClass = Template.class;
+//    private Class<Template> annoClass1 = Template.class;
 
-  public Processor(Object object, Method method, int priority) {
-    this.object = object;
-    this.method = method;
-    this.priority = priority;
-  }
+    public Processor(Object object) { //, Class<? extends Annotation> clazz
+        this.obj = object;
+//        this.annoClass =  clazz;
+    }
+/*
+    private Object callMethod(Method method, Object object, String... args) throws Exception {
+        return method.invoke(object, args);
+    }*/
 
-  public static Object callMethod(Method method, Object object, Object[] args) throws Exception {
-    return method.invoke(object, args);
-  }
 
-
-  public static void main(String[] args) throws Exception {
-    String testAnno = "#source#";
-
-/*    List<Class<?>> packageClasses =
-        Arrays.asList(Main.class, WikiMarkup.class);*/
-
-//    List<Processor> registrations = new ArrayList<>();
-
-    Class<?> ac = WikiMarkup.class;
-
-    Method[] methods = ac.getDeclaredMethods();
-
-    for (Method method : methods) {
-      System.out.println(method.getName());
-
-      if (method.isAnnotationPresent(Template.class)) {
-        System.out.println("Anno Template");
-
-        Template anno = method.getAnnotation(Template.class);
-
-        if (testAnno.equals(anno.value())){
-          System.out.println("equal");
-          System.out.println((String) callMethod(method, ac.newInstance(), new Object[] {"test"}));
-
-//          System.out.println(method.invoke(ac.newInstance()));
-        }
-      }
+    public static void main(String[] args) throws Exception {
+        Processor proc = new Processor(new WikiMarkup()); // del Template, Template.class
+//        System.out.println(proc.runByAnnotation("source"));
     }
 
-/*
-    for (Class<?> clazz : packageClasses) {
-      Processor runAtStartup = clazz.getAnnotation(Template.class);
-      if (runAtStartup == null) {
-        continue;
-      }
+    public Object runByAnnotation(String testAnno, String... args) {
+//    public <T extends Annotation> Object runByAnnotation(String testAnno, Class<T> ann, String... args) {
+        Class<?> ac = obj.getClass();//WikiMarkup.class;
+        Method[] methods = ac.getDeclaredMethods();
 
-      Object instance = clazz.newInstance();
-      Method method = clazz.getMethod(runAtStartup.method());
+        for (Method method : methods) {
+//            System.out.println(method.getName());
+            Annotation[] methodAnnotations = method.getDeclaredAnnotations();
+//            T annotation = method.getDeclaredAnnotation(ann);
 
-      registrations.add(new Processor(
-          instance, method, runAtStartup.priority()));
-    }*/
+            if (method.isAnnotationPresent(annoClass)) {
+//                System.out.println("Anno Template");
 
-/*    Collections.sort(
-        registrations,
-        Comparator.<Processor>comparingInt(x -> x.priority)
-            .reversed());*/
-/*
-    for (Processor registration : registrations) {
-      registration.callMethod();
-    }*/
-  }
+//                for (Annotation methodAnnotation : methodAnnotations) {
+//                    if (methodAnnotation instanceof Template){
+//                        if (testAnno.equals(((Template) methodAnnotation).value())) {
+                if (testAnno.equals(((Template) method.getAnnotation(annoClass)).value())) {
+                    System.out.println("equal");
+                    try {
+
+                        if (method.getParameterCount() == 0) {
+                            System.out.println("Args null - " + method.getName());
+                            return method.invoke(obj);
+                        } else {
+                            System.out.println("Args not null - " + method.getName() + " args - " + args.length);
+                            return method.invoke(obj, (Object) args);
+                        }
+
+//                        return callMethod(method, obj, args);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }
+//            }
+//        }
+        return "";
+    }
 }
