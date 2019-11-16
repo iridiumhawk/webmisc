@@ -1,6 +1,5 @@
-package com.cherkasov.json.annotation;
+package java.com.cherkasov.json.annotation;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 //@JsonAutoDetect
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "className")

@@ -1,4 +1,4 @@
-package com.cherkasov.xml.unmarshall;
+package java.com.cherkasov.xml.unmarshall;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -37,7 +37,7 @@ public class Main {
     }
 
     public static Class getClassName() {
-        return Shop.class;  //your class name
+        return com.cherkasov.xml.unmarshall.Shop.class;  //your class name
     }
 
 

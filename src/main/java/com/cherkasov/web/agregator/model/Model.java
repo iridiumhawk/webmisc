@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Model {
     View view;
-    Provider[] providers;
+    com.cherkasov.web.agregator.model.Provider[] providers;
 
     public Model(View view, Provider... providers) {
         if (view == null || providers == null || providers.length == 0) throw new IllegalArgumentException();

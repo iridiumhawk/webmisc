@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by hawk on 08.07.2016.
  */
-public class HHStrategy implements Strategy {
+public class HHStrategy implements com.cherkasov.web.agregator.model.Strategy {
     //    private static final String URL_FORMAT = "http://hh.ru/search/vacancy?text=%s+%s&page=%d";
         private static final String URL_FORMAT = "http://hh.ru/search/vacancy?text=java+%s&page=%d";
 //    private static final String URL_FORMAT = "http://javarush.ru/testdata/big28data.html";&only_with_salary=true
