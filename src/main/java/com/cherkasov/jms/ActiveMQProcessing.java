@@ -72,7 +72,7 @@ public class ActiveMQProcessing implements AutoCloseable {
       try {
         if (line != null) {
           Message msg = session.createTextMessage(line);
-          saveXmlAttachment("тело запроса", line);
+//          saveXmlAttachment("тело запроса", line);
 
           msg.setObjectProperty("Created", (new Date()).toString());
           producer.send(msg);
